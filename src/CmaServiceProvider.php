@@ -1,11 +1,11 @@
 <?php
 
-namespace edgewizz\fillup;
+namespace edgewizz\cma;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 
-class FillupServiceProvider extends ServiceProvider
+class CmaServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
@@ -14,7 +14,7 @@ class FillupServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->make('Edgewizz\Fillup\Controllers\FillupController');
+        $this->app->make('Edgewizz\Cma\Controllers\CmaController');
     }
 
     /**
@@ -27,7 +27,9 @@ class FillupServiceProvider extends ServiceProvider
         // dd($this);
         $this->loadMigrationsFrom(__DIR__.'/migrations');
         $this->loadRoutesFrom(__DIR__.'/routes.php');
-        $this->loadViewsFrom(__DIR__ . '/components', 'fillup');
-        Blade::component('fillup::form.open', 'form.open');
+        $this->loadViewsFrom(__DIR__ . '/components', 'cma');
+        Blade::component('cma::cma.open', 'cma.open');
+        Blade::component('cma::cma.index', 'cma.index');
+        Blade::component('cma::cma.edit', 'cma.edit');
     }
 }
