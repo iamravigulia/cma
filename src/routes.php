@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('cma/store', 'EdgeWizz\Cma\Controllers\CmaController@store')->name('fmt.cma.store');
 Route::post('cma/update/{id}', 'EdgeWizz\Cma\Controllers\CmaController@update')->name('fmt.cma.update');
 Route::any('cma/delete/{id}', 'EdgeWizz\Cma\Controllers\CmaController@delete')->name('fmt.cma.delete');
-Route::post('cma/csv-upload', 'EdgeWizz\Cma\Controllers\CmaController@uploadFile')->name('fmt.csv-upload');
+Route::post('cma/csv-upload', 'EdgeWizz\Cma\Controllers\CmaController@uploadFile')->name('fmt.cma.csv-upload');
 
 
 

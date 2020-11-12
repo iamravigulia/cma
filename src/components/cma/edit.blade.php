@@ -2,6 +2,7 @@
   Tailwind UI components require Tailwind CSS v1.8 and the @tailwindcss/ui plugin.
   Read the documentation to get started: https://tailwindui.com/documentation
 -->
+<link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
 @php $que = DB::table('fmt_cma_ques')->where('id', $message)->first(); @endphp
 <div class="fixed z-10 inset-0 overflow-y-auto hidden" id="modalCMA{{$que->id}}">
     

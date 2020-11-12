@@ -151,7 +151,7 @@
     </script>
     {{-- <button id="addOption">Add option</button> --}}
     {{--  --}}
-    <form action="{{route('fmt.csv-upload')}}" method="POST" enctype='multipart/form-data' style="margin:20px 40px;">
+    <form action="{{route('fmt.cma.csv-upload')}}" method="POST" enctype='multipart/form-data' style="margin:20px 40px;">
         @csrf
         <input type="file" name="file">
         <button type="submit" style="display: inline-block; padding:4px 20px; background:green; color:#fff; text-transform:uppercase; border-radius:4px;">submit</button>

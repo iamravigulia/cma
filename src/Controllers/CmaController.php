@@ -118,9 +118,11 @@ class CmaController extends Controller
         $f = CmaQues::where('id', $id)->first();
         $f->delete();
         $ans = CmaAns::where('question_id', $f->id)->pluck('id');
-        foreach($ans as $a){
-            $f_ans = CmaAns::where('id', $a)->first();
-            $f_ans->delete();
+        if($ans){
+            foreach($ans as $a){
+                $f_ans = CmaAns::where('id', $a)->first();
+                $f_ans->delete();
+            }
         }
         // dd($ans);
         return back();
@@ -128,7 +130,6 @@ class CmaController extends Controller
     
     public function uploadFile(Request $request)
     {
-        
             $file = $request->file('file');
             // dd($file);
             // File Details
