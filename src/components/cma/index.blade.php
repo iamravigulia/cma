@@ -22,8 +22,8 @@
             <th>Question</th>
             <th>Answers</th>
             <th>Hint</th>
-            <th>Level</th>
-            <th>Score</th>
+            {{-- <th>Level</th>
+            <th>Score</th> --}}
             <th>Created at</th>
             <th>Updated at</th>
             <th>Actions</th>
@@ -45,8 +45,8 @@
                 </ul>
             </td>
             <td>{{$que->hint ?? '-null-'}}</td>
-            <td>{{$que->level ?? '-null-'}}</td>
-            <td>{{$que->score ?? '-null-'}}</td>
+            {{-- <td>{{$que->level ?? '-null-'}}</td>
+            <td>{{$que->score ?? '-null-'}}</td> --}}
             <td>{{date('F d, Y',strtotime($que->created_at))}}</td>
             <td>{{date('F d, Y',strtotime($que->updated_at))}}</td>
             <td>

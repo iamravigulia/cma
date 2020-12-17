@@ -4,6 +4,7 @@ namespace edgewizz\cma\Controllers;
 use App\Http\Controllers\Controller;
 use Edgewizz\Cma\Models\CmaAns;
 use Edgewizz\Cma\Models\CmaQues;
+use Edgewizz\Edgecontent\Models\ProblemSetQues;
 use Illuminate\Http\Request;
 
 class CmaController extends Controller
@@ -18,8 +19,8 @@ class CmaController extends Controller
         // dd($request->ans_correct1);
         $q = new CmaQues();
         $q->question = $request->question;
-        $q->level = $request->question_level;
-        $q->score = $request->question_score;
+        $q->difficulty_level_id = $request->difficulty_level_id;
+        // $q->score = $request->question_score;
         $q->hint = $request->question_hint;
         $q->save();
         /*  */
@@ -88,13 +89,21 @@ class CmaController extends Controller
             $fillupAns6->save();
         }
         /*  */
+        if($request->problem_set_id && $request->format_type_id){
+            $pbq = new ProblemSetQues();
+            $pbq->problem_set_id = $request->problem_set_id;
+            $pbq->question_id = $q->id;
+            $pbq->format_type_id = $request->format_type_id;
+            $pbq->save();
+        }
         return back();
     }
     public function update($id, Request $request){
         $q = CmaQues::where('id', $id)->first();
         $q->question = $request->question;
-        $q->level = $request->question_level;
-        $q->score = $request->question_score;
+        $q->difficulty_level_id = $request->difficulty_level_id;
+        // $q->level = $request->question_level;
+        // $q->score = $request->question_score;
         $q->hint = $request->question_hint;
         $q->save();
         $answers = CmaAns::where('question_id', $q->id)->get();
@@ -111,7 +120,18 @@ class CmaController extends Controller
                 $ans->save();
             }
         }
-        
+        return back();
+    }
+    public function inactive($id){
+        $f = CmaQues::where('id', $id)->first();
+        $f->active = '0';
+        $f->save();
+        return back();
+    }
+    public function active($id){
+        $f = CmaQues::where('id', $id)->first();
+        $f->active = '1';
+        $f->save();
         return back();
     }
     public function delete($id){
@@ -185,28 +205,43 @@ class CmaController extends Controller
                                 "arrange5" => $importData[11],
                                 "answer6" => $importData[12],
                                 "arrange6" => $importData[13],
-                                "score" => $importData[14],
-                                "level" => $importData[15],
-                                "hint" => $importData[16],
+                                "level" => $importData[14],
+                                "hint" => $importData[15],
                             );
                             // var_dump($insertData['answer1']); 
                             /*  */
                             if($insertData['question']){
                                 $fill_Q = new CmaQues();
                                 $fill_Q->question = $insertData['question'];
-                                if($insertData['level'] == '-'){
-                                }else{
-                                    $fill_Q->level = $insertData['level'];
+                                if(!empty($insertData['level'])){
+                                    if($insertData['level'] == 'easy'){
+                                        $fill_Q->difficulty_level_id = 1;
+                                    }else if($insertData['level'] == 'medium'){
+                                        $fill_Q->difficulty_level_id = 2;
+                                    }else if($insertData['level'] == 'hard'){
+                                        $fill_Q->difficulty_level_id = 3;
+                                    }
                                 }
-                                if($insertData['score'] == '-'){
-                                }else{
-                                    $fill_Q->score = $insertData['score'];
-                                }
-                                if($insertData['hint'] == '-'){
-                                }else{
-                                    $fill_Q->hint = $insertData['hint'];
-                                }
+                                // if($insertData['level'] == '-'){
+                                // }else{
+                                //     $fill_Q->level = $insertData['level'];
+                                // }
+                                // if($insertData['score'] == '-'){
+                                // }else{
+                                //     $fill_Q->score = $insertData['score'];
+                                // }
+                                // if($insertData['hint'] == '-'){
+                                // }else{
+                                //     $fill_Q->hint = $insertData['hint'];
+                                // }
                                 $fill_Q->save();
+                                if($request->problem_set_id && $request->format_type_id){
+                                    $pbq = new ProblemSetQues();
+                                    $pbq->problem_set_id = $request->problem_set_id;
+                                    $pbq->question_id = $fill_Q->id;
+                                    $pbq->format_type_id = $request->format_type_id;
+                                    $pbq->save();
+                                }
                                 
                                 if($insertData['answer1'] == '-'){
                                 }else{
